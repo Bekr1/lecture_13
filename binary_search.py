@@ -42,11 +42,35 @@ def binary_search(seq, number):
     return
 
 
+def recursive_binary_search(seznam, hodnota, left_idx, right_idx):
+    """
+    Fce vrátí pozici hledaného prvku v seřazenám seznamu.
+    :param seznam: (list) Seřazený seznam čísel
+    :param hodnota: (int) Hledaná hodnota
+    :param left_idx: (int) index levého okraje prohledávaného prostoru
+    :param right_idx: (int) index pravého okraje prohledávaného prostoru
+    :return: (int) Pozice hledaného prvku
+    """
+    middle = (left_idx + right_idx) // 2
+    if (left_idx - right_idx) == 0:
+        return None
+    elif hodnota < seznam[middle]:
+        return recursive_binary_search(seznam, hodnota, left_idx, middle)
+    elif hodnota > seznam[middle]:
+        return recursive_binary_search(seznam, hodnota, middle + 1, right_idx)
+    else :
+        return middle
+
+
 def main(file_name, number):
     sequence = read_data(file_name=file_name, key='ordered_numbers')
 
     # iterative binary search
-    binary_search(sequence, number=number)
+    pozice_iterativne = binary_search(sequence, number=number)
+    print(pozice_iterativne)
+
+    pozice_rekurze = recursive_binary_search(sequence, number, 0, len(sequence)-1)
+    print(pozice_rekurze)
 
 
 if __name__ == '__main__':
